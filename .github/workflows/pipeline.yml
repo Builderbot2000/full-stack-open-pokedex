@@ -32,7 +32,7 @@ jobs:
         uses: akhileshns/heroku-deploy@v3.12.14
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "fso-pokedex-2023" 
+          heroku_app_name: "fso-pokedex-2023"
           heroku_email: "kevintang1118@outlook.com"
           healthcheck: "https://fso-pokedex-2023.herokuapp.com/health"
-          checkstring: "ok"
+          checkstring: "ok" #test
