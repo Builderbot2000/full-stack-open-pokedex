@@ -40,6 +40,13 @@ jobs:
           heroku_email: "kevintang1118@outlook.com"
           healthcheck: "https://fso-pokedex-2023-be2612fa5114.herokuapp.com/health"
           checkstring: "ok" #test
+      - name: Notify Failure
+        uses: rjstone/discord-webhook-notify@v1.0.4
+        if: failure()
+        with:
+          severity: error
+          details: Commits ${{ join(toJson(github.event.commits.*.message)) }} failed to deploy!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-20.04
@@ -56,12 +63,5 @@ jobs:
         with:
           severity: info
           details: Deployment succeeded!
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-      - name: Notify Failure
-        uses: rjstone/discord-webhook-notify@v1.0.4
-        if: failure()
-        with:
-          severity: error
-          details: Commits ${{ join(toJson(github.event.commits.*.message)) }} failed to deploy!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
